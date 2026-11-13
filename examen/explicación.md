@@ -1,14 +1,22 @@
 # Recorrido de la aplicación de compra
 
-Bueno, cuando el empleado escribe la dirección de la aplicación en el navegador, este funciona como **cliente** ya que la dirección identifica el equipo donde se ejecuta la aplicación: si se usa un nombre de dominio este es una **dirección IP**, la URL indica el **puerto** al que debe conectarse el navegador.
+Cuando el empleado escribe la dirección de nuestra aplicación en el navegador, este funciona como el **cliente**, ya que es el encargado de comunicarse con el equipo donde está funcionando nuestro proyecto. La dirección que escribimos permite localizar el servidor mediante una **dirección IP** y un **puerto**, que indican a dónde debe conectarse el navegador.
 
-El navegador inicia la comunicación mediante **HTTP** y envía una **request** (petición) al servidor. En la primera visita normalmente solicita la página con el método GET. El servidor ejecuta la aplicación escrita en **Python** y atendida por **Flask**. Flask compara la dirección solicitada y el método con una **ruta** definida en la aplicación; para esa primera visita, la ruta prepara la página del formulario.
+Al ingresar por primera vez, el navegador envía una petición llamada **request** mediante el protocolo **HTTP**, utilizando el método **GET** para solicitar la página de compra. Esta petición llega a nuestro servidor, donde se encuentra la aplicación desarrollada con **Python y Flask**.
 
-La aplicación devuelve una **response** (respuesta) con el formulario. Flask puede construirla usando un **template**: una plantilla que combina la estructura de la página con los datos que la aplicación le entrega. El navegador recibe el **HTML** y lo interpreta para mostrar los campos donde se capturan cantidad y precio. Esa parte que el empleado ve e interactúa en el navegador es el **frontend**. Las reglas **CSS** controlan la presentación visual; si el proyecto incluye **Bootstrap**, sus estilos también pueden ayudar a organizar y dar formato a los controles. En este recorrido no se necesita **JavaScript** para enviar el formulario ni calcular el importe: el empleado lo envía y el cálculo ocurre en el servidor.
+Flask recibe la petición y revisa qué **ruta** corresponde a la dirección solicitada. En este caso, ejecuta la ruta de compra y muestra el formulario donde el empleado puede ingresar la cantidad de artículos y su precio unitario.
 
-Después de escribir la cantidad y el precio, el empleado envía el formulario. El navegador manda esos valores en una nueva petición **HTTP** usando el método **POST**, que incluye los datos del formulario en el cuerpo de la petición. El **backend** recibe la petición en la ruta de Flask que acepta POST. Allí, el código **Python** obtiene los valores, los convierte a números y calcula el importe multiplicando la cantidad por el precio.
+Para mostrar esta página, Flask utiliza un **template**, que es una plantilla HTML donde se organiza el contenido que verá el usuario. El navegador recibe el código **HTML** y lo interpreta para mostrar el formulario. Esta parte es conocida como **frontend**, porque es con la que interactúa directamente el empleado. Por otro lado, los estilos **CSS** y **Bootstrap** permiten darle una mejor presentación a la página, organizando los campos, botones y demás elementos.
 
-Con el resultado, Flask genera otra respuesta, normalmente al renderizar un **template** con el importe calculado. El servidor la devuelve al cliente como una **response** que contiene **HTML**. Finalmente, el navegador interpreta ese HTML y presenta el importe al empleado, aplicando los estilos **CSS** y **Bootstrap** si están incluidos y enlazados en la página.
+Una vez que el empleado ingresa la cantidad y el precio, presiona el botón para calcular la compra. En ese momento, el navegador envía otra petición HTTP, pero ahora utiliza el método **POST**, ya que necesita mandar los datos capturados al servidor.
+
+Cuando Flask recibe esta petición, ejecuta nuevamente la ruta de compra, que ahora procesa los datos enviados por el formulario. Esta parte corresponde al **backend**, porque es donde se realizan las operaciones internas de la aplicación.
+
+Mediante **Python**, recuperamos los valores de cantidad y precio, los convertimos a números y multiplicamos ambos para obtener el subtotal. Después, el programa revisa si el subtotal supera los $1,000. Si es así, aplica un descuento del 10 %; de lo contrario, mantiene el subtotal sin descuento. Finalmente, obtiene el total de la compra.
+
+Después de realizar las operaciones, Flask envía los resultados al template de compra mediante `render_template()`. De esta manera, la página puede mostrar nuevamente los datos ingresados por el empleado, el subtotal, el descuento aplicado y el total a pagar.
+
+Por último, el navegador recibe la respuesta del servidor y muestra los resultados en pantalla. Así, el empleado puede visualizar el cálculo directamente en nuestra aplicación, sin necesidad de revisar la consola de Python.
 
 ## Diagrama de comunicación
 
@@ -19,17 +27,18 @@ sequenceDiagram
     participant Servidor as Servidor Flask (IP:puerto)
 
     Empleado->>Cliente: Escribe la dirección de la aplicación
-    Cliente->>Servidor: HTTP GET a la ruta del formulario
-    Servidor-->>Cliente: HTTP response con HTML del formulario
-    Cliente-->>Empleado: Muestra los campos de cantidad y precio
-    Empleado->>Cliente: Captura los valores y envía el formulario
+    Cliente->>Servidor: HTTP GET a la ruta /compra
+    Servidor-->>Cliente: Response con HTML del formulario
+    Cliente-->>Empleado: Muestra campos de cantidad y precio
+    Empleado->>Cliente: Ingresa los datos y envía el formulario
     Cliente->>Servidor: HTTP POST con cantidad y precio
-    Note over Servidor: Flask enruta la petición; Python procesa los datos y calcula cantidad × precio
-    Servidor-->>Cliente: HTTP response con HTML y el importe
-    Cliente-->>Empleado: Presenta el resultado
+    Note over Servidor: Flask recibe los datos y Python realiza los cálculos
+    Note over Servidor: Calcula subtotal, descuento y total
+    Servidor-->>Cliente: Response con HTML y resultados
+    Cliente-->>Empleado: Muestra los resultados de la compra
 ```
 
-En el diagrama, el **cliente** es el navegador y el **servidor** es el proceso donde corre Flask, accesible mediante su **IP:puerto**. Primero el navegador solicita el formulario; luego envía una petición **POST** con los datos. Flask los procesa en el **backend** y retorna el **HTML** actualizado, que el navegador muestra al empleado.
+En conclusión, el funcionamiento de nuestra aplicación consiste en una comunicación entre el **cliente y el servidor**. Primero, el navegador solicita el formulario mediante GET; después, envía los datos mediante POST para que Flask y Python realicen los cálculos en el backend. Finalmente, el servidor devuelve una respuesta con los resultados en HTML, que se muestran al empleado en el navegador.
 
 # Evidencias e interpretación de resultados
 ## Portal de Servicios
