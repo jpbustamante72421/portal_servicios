@@ -1,0 +1,103 @@
+
+{% extends 'base.html' %}
+
+{% block titulo %}Servicios | Portal de Servicios{% endblock %}
+
+{% block contenido %}
+
+<div class="text-center mb-5">
+
+    <h1>Nuestros Servicios</h1>
+
+    <p class="lead">
+        Conoce las herramientas que tenemos disponibles para ti.
+    </p>
+
+</div>
+
+<div class="row g-4">
+
+    <!-- SERVICIO 1 -->
+    <div class="col-md-4">
+
+        <div class="card shadow h-100">
+
+            <img src="{{ url_for('static', filename='img/compra.jpg') }}"
+                 class="card-img-top" alt="Calculadora de compra">
+
+            <div class="card-body text-center">
+
+                <h5 class="card-title">Calculadora de Compra</h5>
+
+                <p class="card-text">
+                    Calcula el subtotal, los descuentos y el total
+                    de tus compras de manera sencilla.
+                </p>
+
+                <a href="/compra" class="btn btn-primary">
+                    Ir al servicio
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SERVICIO 2 -->
+    <div class="col-md-4">
+
+        <div class="card shadow h-100">
+
+            <img src="{{ url_for('static', filename='img/salario.jpg') }}"
+                 class="card-img-top" alt="Calculadora de salario">
+
+            <div class="card-body text-center">
+
+                <h5 class="card-title">Calculadora de Salario</h5>
+
+                <p class="card-text">
+                    Calcula tus ingresos considerando las horas
+                    normales y las horas extra trabajadas.
+                </p>
+
+                <a href="/salario" class="btn btn-primary">
+                    Ir al servicio
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SERVICIO 3 -->
+    <div class="col-md-4">
+
+        <div class="card shadow h-100">
+
+            <img src="{{ url_for('static', filename='img/temperatura.jpg') }}"
+                 class="card-img-top" alt="Conversor de temperatura">
+
+            <div class="card-body text-center">
+
+                <h5 class="card-title">Conversor de Temperatura</h5>
+
+                <p class="card-text">
+                    Convierte temperaturas de Celsius a Fahrenheit
+                    y Kelvin rápidamente.
+                </p>
+
+                <a href="/temperatura" class="btn btn-primary">
+                    Ir al servicio
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

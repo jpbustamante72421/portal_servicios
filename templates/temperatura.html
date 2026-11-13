@@ -1,0 +1,78 @@
+
+{% extends 'base.html' %}
+
+{% block titulo %}Temperatura | Portal de Servicios{% endblock %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-7">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+                <h3 class="text-center mb-0">Conversor de Temperatura</h3>
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST" action="/temperatura">
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Temperatura en Celsius (°C):
+                        </label>
+
+                        <input type="number" name="celsius"
+                               class="form-control"
+                               step="any" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Convertir temperatura
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% if celsius is defined %}
+
+        <div class="card shadow mt-4">
+
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Resultados de conversión</h4>
+            </div>
+
+            <div class="card-body">
+
+                <h5>Temperatura original:</h5>
+
+                <p>{{ celsius }} °C</p>
+
+                <hr>
+
+                <p>
+                    <strong>Fahrenheit:</strong>
+                    {{ "%.2f"|format(fahrenheit) }} °F
+                </p>
+
+                <p>
+                    <strong>Kelvin:</strong>
+                    {{ "%.2f"|format(kelvin) }} K
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

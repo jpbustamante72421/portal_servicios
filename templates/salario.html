@@ -1,0 +1,87 @@
+
+{% extends 'base.html' %}
+
+{% block titulo %}Salario | Portal de Servicios{% endblock %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-7">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+                <h3 class="text-center mb-0">Calculadora de Salario</h3>
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST" action="/salario">
+
+                    <div class="mb-3">
+                        <label class="form-label">Horas trabajadas:</label>
+
+                        <input type="number" name="horas"
+                               class="form-control"
+                               min="0" step="0.01" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Pago por hora:</label>
+
+                        <input type="number" name="pago"
+                               class="form-control"
+                               min="0.01" step="0.01" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Calcular salario
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% if salario_total is defined %}
+
+        <div class="card shadow mt-4">
+
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Resultado del salario</h4>
+            </div>
+
+            <div class="card-body">
+
+                <p><strong>Horas trabajadas:</strong> {{ horas }}</p>
+
+                <p><strong>Pago por hora:</strong>
+                    ${{ "%.2f"|format(pago) }}</p>
+
+                {% if horas > 40 %}
+                    <p><strong>Horas normales:</strong> 40</p>
+                    <p><strong>Horas extra:</strong> {{ horas - 40 }}</p>
+                {% else %}
+                    <p><strong>Horas normales:</strong> {{ horas }}</p>
+                    <p><strong>Horas extra:</strong> 0</p>
+                {% endif %}
+
+                <hr>
+
+                <h4 class="text-success">
+                    Salario total: ${{ "%.2f"|format(salario_total) }}
+                </h4>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
