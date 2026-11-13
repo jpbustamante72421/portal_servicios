@@ -1,0 +1,32 @@
+
+body {
+    background-color: #f4f6f9;
+    font-family: Arial, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+}
+
+h1 {
+    font-weight: bold;
+    color: #212529;
+}
+
+footer {
+    margin-top: 50px;
+}
